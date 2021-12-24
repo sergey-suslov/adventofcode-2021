@@ -19,6 +19,22 @@ defmodule Task5 do
         [x1, y, x2, y], acc ->
           Enum.reduce(x1..x2, acc, fn x, grid -> Map.update(grid, {x, y}, 1, &(&1 + 1)) end)
 
+        _, acc ->
+          acc
+      end)
+      |> Map.values()
+      |> Enum.count(&(&1 > 1))
+
+  def part2(filename),
+    do:
+      get_task_initials(filename)
+      |> Enum.reduce(%{}, fn
+        [x, y1, x, y2], acc ->
+          Enum.reduce(y1..y2, acc, fn y, grid -> Map.update(grid, {x, y}, 1, &(&1 + 1)) end)
+
+        [x1, y, x2, y], acc ->
+          Enum.reduce(x1..x2, acc, fn x, grid -> Map.update(grid, {x, y}, 1, &(&1 + 1)) end)
+
         [x1, y1, x2, y2], acc ->
           Enum.zip(x1..x2, y1..y2)
           |> Enum.reduce(acc, fn point, grid -> Map.update(grid, point, 1, &(&1 + 1)) end)
